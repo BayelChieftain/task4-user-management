@@ -1,4 +1,3 @@
-
 import React from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
@@ -20,6 +19,8 @@ const LoginPage = () => {
             email: user.email,
             id: user.uid,
             token: user.refreshToken,
+            displayName: user.displayName,
+            lastSignInTime: user.metadata.lastSignInTime
         }));
         navigate('/');
       })
@@ -35,7 +36,6 @@ const LoginPage = () => {
           </div>
           <AuthForm
             buttonText="Sign In"
-            // onSubmit={handleSignIn}
             handleClick = {handleSignIn}
           />
 

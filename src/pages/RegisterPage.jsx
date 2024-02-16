@@ -1,5 +1,5 @@
 import React from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import AuthForm from "components/AuthForm";
 import { setUser } from "store/slice/UserSlice";
 import { useDispatch } from "react-redux";
@@ -9,19 +9,36 @@ const RegisterPage = () => {
   const dispatch = useDispatch();
   let navigate = useNavigate();
   
-  const handleSignUp = (email, password) => {
+  const handleSignUp = (email, password, name) => {
     const auth = getAuth();
+
     createUserWithEmailAndPassword(auth, email, password)
-        .then(({user}) => {
-            console.log(user);
-            dispatch(setUser({
-                email: user.email,
-                id: user.uid,
-                token: user.refreshToken,
-            }));
-            navigate('/');
+    .then(({ user }) => {
+      console.log(user);
+
+      updateProfile(user, { displayName: name })
+        .then(() => {
+          const updatedUser = auth.currentUser;
+
+          dispatch(
+            setUser({
+              email: updatedUser.email,
+              id: updatedUser.uid,
+              token: updatedUser.refreshToken,
+              displayName: updatedUser.displayName,
+              lastSignInTime: updatedUser.metadata.lastSignInTime,
+            })
+          );
+
+          navigate('/');
         })
-        .catch(console.error)
+        .catch((error) => {
+          console.error('Error updating user profile:', error);
+        });
+    })
+    .catch((error) => {
+      console.error('Error during registration:', error);
+    });
 }
   return (
             
@@ -35,7 +52,7 @@ const RegisterPage = () => {
               <AuthForm
                 buttonText="Sign Up"
                 handleClick = {handleSignUp}
-                // onSubmit={(formData) => handleSignUp(formData)}
+                isSignUp = {true}
               />
 
               <p>

@@ -4,7 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     email: null,
     token: null,
-    id: null
+    id: null,
+    displayName: null
 };
 
 const userSlice = createSlice({
@@ -15,11 +16,15 @@ const userSlice = createSlice({
             state.email = action.payload.email;
             state.token = action.payload.token;
             state.id = action.payload.id;
+            state.displayName = action.payload.displayName;
+            state.lastSignInTime = action.payload.lastSignInTime;
         },
         removeUser(state) {
             state.email = null;
             state.token = null;
             state.id = null;
+            state.displayName = null;
+            state.lastSignInTime = null
         }
     }
 })
