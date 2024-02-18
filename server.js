@@ -1,14 +1,17 @@
 const express = require('express');
 const admin = require('firebase-admin');
 const serviceAccount = require('./user-management-f931a-594254e73733.json');
+const cors = require('cors');
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: process.env.FIREBASE_ID_PROJECT,
 });
+
+app.use(cors());
 
 
 app.get('/api/users', async (req, res) => {

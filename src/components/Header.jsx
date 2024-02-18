@@ -13,8 +13,6 @@ const Header = () => {
         <div className="container mx-auto flex justify-between items-center">
          <div>
          <h3>Hello! {displayName}</h3>
-         <span>{email}</span> 
-         <span>{lastSignInTime}</span> 
          </div>       
          <button onClick={() => dispatch(removeUser())}>Log out</button>
         </div>
