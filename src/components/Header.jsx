@@ -7,7 +7,7 @@ import { removeUser } from "store/slice/UserSlice";
 
 const Header = () => {
     const dispatch = useDispatch()
-    const { email, displayName, lastSignInTime } = useAuth();
+    const { displayName } = useAuth();
     return (
       <div className="bg-indigo-800 text-white p-4">
         <div className="container mx-auto flex justify-between items-center">

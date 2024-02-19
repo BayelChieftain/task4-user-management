@@ -5,7 +5,7 @@ const UserTable = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/api/users')
+    axios.get('https://nodejs-serverless-function-express-eta-gules.vercel.app/api/hello')
       .then(response => setUsers(response.data))
       .catch(error => console.error('Error fetching users:', error));
   }, []);
@@ -16,9 +16,9 @@ const UserTable = () => {
       <table className="min-w-full bg-white border border-gray-300">
         <thead>
           <tr>
-            <th className="py-2 px-4 border-b">Name</th>
-            <th className="py-2 px-4 border-b">Email</th>
-            <th className="py-2 px-4 border-b">Last Login</th>
+            <th className="py-2 px-4 border-b text-left">Name</th>
+            <th className="py-2 px-4 border-b text-left">Email</th>
+            <th className="py-2 px-4 border-b text-right">Last Login</th>
           </tr>
         </thead>
         <tbody>
@@ -26,7 +26,7 @@ const UserTable = () => {
             <tr key={user.uid}>
               <td className="py-2 px-4 border-b">{user.displayName}</td>
               <td className="py-2 px-4 border-b">{user.email}</td>
-              <td className="py-2 px-4 border-b">{user.lastSignInTime}</td>
+              <td className="py-2 px-4 border-b text-right">{user.lastSignInTime}</td>
             </tr>
           ))}
         </tbody>
